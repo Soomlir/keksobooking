@@ -1,14 +1,30 @@
-function randomNumber (min, max, count) {
+function getRandomIntNumber (min, max) {
   if (min < 0) {
-    return false;
+    min = 0;
+    return min;
   }
 
   if (min === max) {
-    return false;
+    return max;
   }
 
-  const number = Math.random() * (max - min) + min;
-  return number.toFixed(count);
+  const number = (Math.random() * (max - min) + min).toFixed();
+  return +number;
 }
 
-randomNumber(1, 10, 1);
+function getRandomFloatNumber (min, max, count) {
+  if (min < 0) {
+    min = 0;
+    return min;
+  }
+
+  if (min === max) {
+    return min.toFixed(count);
+  }
+
+  const number = (Math.random() * (max - min) + min).toFixed(count);
+  return +number;
+}
+
+getRandomIntNumber(1, 10);
+getRandomFloatNumber(1, 10, 1);
