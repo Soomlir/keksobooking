@@ -9,12 +9,31 @@ const MAX_ROOMS = 10;
 const HOUSING_TYPES = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
 const TIME_CHECKS = ['12:00', '13:00', '14:00'];
 const FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+const FEATURES_DICTIONARY = {
+  palace: 'Дворец',
+  flat: 'Квартира',
+  hous: 'Дом',
+  bungalow: 'Бунгало',
+  hotel: 'Отель'
+};
 
 const PHOTOS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
 ];
 
-export {MIN_LAT, MAX_LAT, MIN_LNG, MAX_LNG, COORD_PRECISION, MAX_PRICE, MAX_ROOMS, HOUSING_TYPES,
-  TIME_CHECKS, FEATURES, PHOTOS};
+export {
+  MIN_LAT,
+  MAX_LAT,
+  MIN_LNG,
+  MAX_LNG,
+  COORD_PRECISION,
+  MAX_PRICE,
+  MAX_ROOMS,
+  HOUSING_TYPES,
+  TIME_CHECKS,
+  FEATURES,
+  FEATURES_DICTIONARY,
+  PHOTOS
+};

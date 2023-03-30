@@ -1,5 +1,7 @@
-import {createOfferData} from './create-offer-data.js';
+import { getRandomOffers } from './create-offer-data.js';
+import { generateCard } from './generate-card.js';
 
-const getRandomOffers = (length) => Array.from({ length }, (_el, i) => createOfferData(i + 1));
+const mapElement = document.querySelector('#map-canvas');
+const [cardData] = getRandomOffers(1);
 
-getRandomOffers(10);
+mapElement.append(generateCard(cardData));

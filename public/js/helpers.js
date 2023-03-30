@@ -31,4 +31,12 @@ const getRandomArrayFragment = (arr) => {
   return arr.slice(arrStart, arrEnd);
 };
 
-export {getRandomIntNumber, getRandomFloatNumber, getRandomArrayItem, getRandomArrayFragment};
+const fillElement = (element, data, callback = (item) => item) => {
+  if (data.length && data.some((item) => item)) {
+    element.innerHTML = data.map(callback).join();
+  } else {
+    element.remove();
+  }
+};
+
+export { getRandomIntNumber, getRandomFloatNumber, getRandomArrayItem, getRandomArrayFragment, fillElement };
