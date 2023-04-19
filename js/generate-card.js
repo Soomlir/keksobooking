@@ -1,4 +1,4 @@
-import { FEATURES_DICTIONARY, PHOTOS } from './constants.js';
+import { HOUSING_DICTIONARY, PHOTOS } from './constants.js';
 import { fillElement } from './helpers.js';
 
 const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
@@ -16,7 +16,7 @@ const generateCard = ({ author, offer }) => {
   priceElement.textContent = `${offer.price} ₽/ночь`;
 
   const typeHousingElement = cardElement.querySelector('.popup__type');
-  typeHousingElement.textContent = FEATURES_DICTIONARY[offer.type];
+  typeHousingElement.textContent = HOUSING_DICTIONARY[offer.type];
 
   const roomsAndGuestsElement = cardElement.querySelector('.popup__text--capacity');
   roomsAndGuestsElement.textContent = `${offer.rooms} комнаты для ${offer.guests} гостей`;

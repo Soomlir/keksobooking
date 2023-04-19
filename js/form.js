@@ -1,54 +1,68 @@
+import { forms } from './toggle-page.js';
 import { initValidator } from './validator.js';
-import { ROOM_NUMBERS_GUESTS, PRICE_DICTIONARY } from './constants.js';
+import {
+  ROOM_NUMBERS_GUESTS,
+  PRICE_DICTIONARY,
+  MIN_TITLE_LENGTH,
+  MAX_TITLE_LENGTH,
+  PRIORITY,
+  MAX_VALUE_PRICE
+} from './constants.js';
 
-const forms = ['ad-form', 'map__filters'].map((selector) => ({
-  element: document.querySelector(`.${selector}`),
-  disabledClass: `${selector}--disabled`
-}));
-const formElements = document.querySelectorAll('fieldset, select');
+const formElement = forms[0].element;
 
-const toggleForms = (activate) => {
-  const method = activate ? 'remove' : 'add';
-  forms.forEach(({ element, disabledClass }) => {
-    element.classList[method](disabledClass);
-  });
-
-  formElements.forEach((element) => element.disabled === !activate);
+const formElements = {
+  formElement,
+  titleElement: formElement.querySelector('#title'),
+  priceElement: formElement.querySelector('#price'),
+  roomNumberElement: formElement.querySelector('#room_number'),
+  capacityElement: formElement.querySelector('#capacity'),
+  typeHousingElement: formElement.querySelector('#type'),
+  timeIn: formElement.querySelector('#timein'),
+  timeOut: formElement.querySelector('#timeout')
 };
 
-const titleElement = document.querySelector('#title');
-const priceElement = document.querySelector('#price');
-const roomNumberElement = document.querySelector('#room_number');
-const capacityElement = document.querySelector('#capacity');
-const typeHousingElement = document.querySelector('#type');
+const validator = initValidator(formElements);
 
-const dataElements = {
-  forms: forms,
-  titleElement: titleElement,
-  priceElement: priceElement,
-  roomNumberElement: roomNumberElement,
-  capacityElement: capacityElement,
-  typeHousingElement: typeHousingElement
-};
+const ERROR_TITLE = `Не менее ${MIN_TITLE_LENGTH} символов и не более ${MAX_TITLE_LENGTH} символов`;
+const ERROR_PRICE = `Максимальное значение ${MAX_VALUE_PRICE}`;
+const ERROR_CAPACITY = `Максимальное количество мест ${ROOM_NUMBERS_GUESTS[formElements.roomNumberElement.value]}`;
+const ERROR_CHECK_TIMEOUT = 'Время заезда и выезда должно быть одинаковое';
+const getErrorMinPrice = (value) => `Минимальная цена за ночь ${PRICE_DICTIONARY[value]}`;
 
-const validateCapacity = () => ROOM_NUMBERS_GUESTS[roomNumberElement.value].includes(capacityElement.value);
-
+const validateTitle = ({ length }) => length >= MIN_TITLE_LENGTH && length <= MAX_TITLE_LENGTH;
+const validatePrice = (value) => value <= MAX_VALUE_PRICE;
+const validateRoomsNumber = () =>
+  ROOM_NUMBERS_GUESTS[formElements.roomNumberElement.value].includes(formElements.capacityElement.value);
 const validateTypeHousing = (evt) => {
-  priceElement.placeholder = evt.target.value;
-  priceElement.value = evt.target.value;
+  formElements.priceElement.placeholder = evt.target.value;
+  formElements.priceElement.value = evt.target.value;
 
-  if (priceElement.value >= PRICE_DICTIONARY[evt.target.value]) {
-    return true;
-  }
-
-  return false;
+  return formElements.priceElement.value >= PRICE_DICTIONARY[evt.target.value];
 };
+const validateTimeOut = () => formElements.timeIn.value === formElements.timeOut.value;
 
-roomNumberElement.addEventListener('change', validateCapacity);
-typeHousingElement.addEventListener('change', validateTypeHousing);
+validator.addValidator(
+  formElements.titleElement,
+  validateTitle,
+  ERROR_TITLE,
+  PRIORITY,
+  false
+);
+validator.addValidator(formElements.priceElement, validatePrice, ERROR_PRICE, PRIORITY, false);
+validator.addValidator(formElements.capacityElement, validateRoomsNumber, ERROR_CAPACITY, PRIORITY, false);
+validator.addValidator(formElements.typeHousingElement, validateTypeHousing, getErrorMinPrice, PRIORITY, false);
+validator.addValidator(formElements.timeOut, validateTimeOut, ERROR_CHECK_TIMEOUT, PRIORITY, false);
 
-initValidator(dataElements);
+formElements.roomNumberElement.addEventListener('change', () => validator.validate(formElements.capacityElement));
+formElements.typeHousingElement.addEventListener('change', () => validator.validate(formElements.typeHousingElement));
+formElements.timeIn.addEventListener('change', () => validator.validate(formElements.timeOut));
+formElements.formElement.addEventListener('submit', (evt) => {
+  evt.preventDefault();
 
-export const activateForms = () => toggleForms(true);
-export const deactivateForms = () => toggleForms(false);
-export { validateCapacity, validateTypeHousing };
+  if (!validator.validate()) {
+    // return;
+  }
+});
+
+export { validator };
