@@ -13,15 +13,16 @@ const PRIORITY = 1000;
 
 const HOUSING_TYPES = ['bungalow', 'flat', 'hotel', 'house', 'palace'];
 const HOUSING_MIN_PRICE = ['0', '1000', '3000', '5000', '10000'];
-const TIME_CHECKS = ['12:00', '13:00', '14:00'];
-const FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-const FEATURES_DICTIONARY = {
+const HOUSING_DICTIONARY = {
   palace: 'Дворец',
   flat: 'Квартира',
   house: 'Дом',
   bungalow: 'Бунгало',
   hotel: 'Отель'
 };
+
+const TIME_CHECKS = ['12:00', '13:00', '14:00'];
+const FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 
 const PHOTOS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
@@ -56,7 +57,7 @@ export {
   HOUSING_MIN_PRICE,
   TIME_CHECKS,
   FEATURES,
-  FEATURES_DICTIONARY,
+  HOUSING_DICTIONARY,
   PHOTOS,
   ROOM_NUMBERS_GUESTS,
   MIN_TITLE_LENGTH,
