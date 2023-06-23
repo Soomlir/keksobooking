@@ -21,12 +21,19 @@ const initAdForm = () => {
   formElements.roomNumberElement.addEventListener('change', () => {
     validator.validate(formElements.capacityElement);
   });
+
   formElements.typeHousingElement.addEventListener('change', () => {
     formElements.priceElement.placeholder = PRICE_DICTIONARY[formElements.typeHousingElement.value];
-    formElements.priceElement.value = PRICE_DICTIONARY[formElements.typeHousingElement.value];
-    validator.validate(formElements.typeHousingElement);
+    validator.validate(formElements.priceElement);
   });
-  formElements.timeInElement.addEventListener('change', () => validator.validate(formElements.timeOut));
+  formElements.timeInElement.addEventListener('change', () => {
+    formElements.timeOutElement.value = formElements.timeInElement.value;
+  });
+
+  formElements.timeOutElement.addEventListener('change', () => {
+    formElements.timeInElement.value = formElements.timeOutElement.value;
+  });
+
   formElements.formElement.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
