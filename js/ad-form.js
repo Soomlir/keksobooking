@@ -1,6 +1,7 @@
 import { forms } from './toggle-page.js';
 import { initValidator } from './validator.js';
 import { PRICE_DICTIONARY } from './constants.js';
+import { getSlider } from './slider.js';
 
 const formElement = forms[0].element;
 
@@ -12,8 +13,11 @@ const formElements = {
   capacityElement: formElement.querySelector('#capacity'),
   typeHousingElement: formElement.querySelector('#type'),
   timeInElement: formElement.querySelector('#timein'),
-  timeOutElement: formElement.querySelector('#timeout')
+  timeOutElement: formElement.querySelector('#timeout'),
+  sliderElement: formElement.querySelector('.ad-form__slider')
 };
+
+const slider = getSlider(formElements.sliderElement);
 
 const validator = initValidator(formElements);
 
@@ -26,8 +30,15 @@ const initAdForm = () => {
     formElements.priceElement.placeholder = PRICE_DICTIONARY[formElements.typeHousingElement.value];
     validator.validate(formElements.priceElement);
   });
+
   formElements.timeInElement.addEventListener('change', () => {
     formElements.timeOutElement.value = formElements.timeInElement.value;
+  });
+
+  formElements.priceElement.addEventListener('input', () => {
+    if (validator.validate(formElements.priceElement)) {
+      slider.set(parseInt(formElements.priceElement.value, 10));
+    }
   });
 
   formElements.timeOutElement.addEventListener('change', () => {
@@ -42,5 +53,9 @@ const initAdForm = () => {
     }
   });
 };
+
+slider.on('slide', () => {
+  formElements.priceElement.value = slider.get();
+});
 
 export { initAdForm, formElements };
