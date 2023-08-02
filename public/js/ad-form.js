@@ -2,6 +2,7 @@ import { forms } from './toggle-page.js';
 import { initValidator } from './validator.js';
 import { PRICE_DICTIONARY } from './constants.js';
 import { getSlider } from './slider.js';
+import { postData } from './api.js';
 
 const formElement = forms[0].element;
 
@@ -14,11 +15,11 @@ const formElements = {
   typeHousingElement: formElement.querySelector('#type'),
   timeInElement: formElement.querySelector('#timein'),
   timeOutElement: formElement.querySelector('#timeout'),
-  sliderElement: formElement.querySelector('.ad-form__slider')
+  sliderElement: formElement.querySelector('.ad-form__slider'),
+  buttonElement: formElement.querySelector('.ad-form__submit')
 };
 
 const slider = getSlider(formElements.sliderElement);
-
 const validator = initValidator(formElements);
 
 const initAdForm = () => {
@@ -47,10 +48,15 @@ const initAdForm = () => {
 
   formElements.formElement.addEventListener('submit', (evt) => {
     evt.preventDefault();
-
     if (!validator.validate()) {
-      // return;
+      return;
     }
+
+    formElements.buttonElement.disabled = true;
+    postData(new FormData(formElement)).then(() => {
+      formElements.buttonElement.disabled = false;
+      formElement.reset();
+    });
   });
 };
 

@@ -1,8 +1,9 @@
-import { getRandomOffers } from './create-offer-data.js';
 import { initAdForm } from './ad-form.js';
+import { getData } from './api.js';
 import { initMap } from './map.js';
+import { activateForms } from './toggle-page.js';
 
-const cardData = getRandomOffers(10);
-
-initMap(cardData);
 initAdForm();
+getData().then((data) => {
+  initMap(data, activateForms);
+});
