@@ -1,39 +1,30 @@
-import { activateForms } from './toggle-page.js';
 import { generateCard } from './generate-card.js';
+import { ICON_HEIGHT, ICON_WIDTH, ICON_POINT, FLOAT_PRECISION, LAT_TOKYO, LNG_TOKYO } from './constants.js';
 
-const iconWidth = 52;
-const iconHeight = 52;
-const iconPoint = 26;
-const floatCoordinate = 5;
-
-const initMap = (cards) => {
-  const map = L.map('map-canvas')
-    .on('load', () => {
-      activateForms();
-    })
-    .setView({
-      lat: 35.6894875,
-      lng: 139.6917064,
-    }, 10);
-
-  L.tileLayer(
-    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+const initMap = (offers, callback) => {
+  const addressElement = document.querySelector('#address');
+  const map = L.map('map-canvas').on('load', callback).setView(
     {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      lat: LAT_TOKYO,
+      lng: LNG_TOKYO
     },
-  ).addTo(map);
+    10
+  );
 
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
 
   const mainPinIcon = L.icon({
     iconUrl: './img/main-pin.svg',
-    iconSize: [iconWidth, iconHeight],
-    iconAnchor: [iconPoint, iconHeight]
+    iconSize: [ICON_WIDTH, ICON_HEIGHT],
+    iconAnchor: [ICON_POINT, ICON_HEIGHT]
   });
 
   const mainMarker = L.marker(
     {
-      lat: 35.6894875,
-      lng: 139.6917064,
+      lat: LAT_TOKYO,
+      lng: LNG_TOKYO
     },
     {
       draggable: true,
@@ -42,24 +33,16 @@ const initMap = (cards) => {
   );
   mainMarker.addTo(map);
 
-  const addressCoordinates = document.querySelector('#address');
-
   mainMarker.on('moveend', (evt) => {
-    const coord  = evt.target.getLatLng();
-    addressCoordinates.value = `${+coord.lat.toFixed(floatCoordinate)} ${+coord.lng.toFixed(floatCoordinate)}`;
+    const coord = evt.target.getLatLng();
+    addressElement.value = `${coord.lat.toFixed(FLOAT_PRECISION)} ${coord.lng.toFixed(FLOAT_PRECISION)}`;
   });
 
-  cards.forEach((elem) => {
-    const {lat, lng} = elem.location;
-    const balloon = generateCard(elem);
-    const marker = L.marker({
-      lat,
-      lng,
-    });
-
+  offers.forEach((offer) => {
+    const marker = L.marker(offer.location);
+    const balloon = generateCard(offer);
     marker.addTo(map).bindPopup(balloon);
   });
-
 };
 
 export { initMap };

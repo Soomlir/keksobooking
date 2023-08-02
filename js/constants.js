@@ -11,6 +11,18 @@ const MAX_TITLE_LENGTH = 100;
 const MAX_VALUE_PRICE = 100000;
 const PRIORITY = 1000;
 
+const ICON_WIDTH = 52;
+const ICON_HEIGHT = 52;
+const ICON_POINT = 26;
+const FLOAT_PRECISION = 5;
+
+const ALERT_DELAY = 5000;
+
+const LAT_TOKYO = 35.6894875;
+const LNG_TOKYO = 139.6917064;
+
+const ESC_KEY = 'Escape';
+
 const HOUSING_TYPES = ['bungalow', 'flat', 'hotel', 'house', 'palace'];
 const HOUSING_MIN_PRICE = ['0', '1000', '3000', '5000', '10000'];
 const HOUSING_DICTIONARY = {
@@ -64,5 +76,13 @@ export {
   MAX_TITLE_LENGTH,
   MAX_VALUE_PRICE,
   PRIORITY,
-  PRICE_DICTIONARY
+  PRICE_DICTIONARY,
+  ICON_WIDTH,
+  ICON_HEIGHT,
+  ICON_POINT,
+  FLOAT_PRECISION,
+  LAT_TOKYO,
+  LNG_TOKYO,
+  ALERT_DELAY,
+  ESC_KEY
 };
