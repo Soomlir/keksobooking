@@ -58,6 +58,11 @@ const initAdForm = () => {
       formElement.reset();
     });
   });
+
+  formElements.formElement.addEventListener('reset', () => {
+    slider.set(parseInt(formElements.priceElement.min, 10));
+    validator.reset();
+  });
 };
 
 slider.on('slide', () => {

@@ -1,7 +1,7 @@
 import { showAlert } from './helpers.js';
 import { createPopup, popupSuccessElement, popupErrorElement } from './popup.js';
 
-const getData = () => {
+const getData = () =>
   fetch('https://25.javascript.pages.academy/keksobooking/data', {
     method: 'GET',
     credentials: 'same-origin'
@@ -16,9 +16,8 @@ const getData = () => {
     .catch(() => {
       showAlert('Не удалось получить данные! Попробуйте еще раз.');
     });
-};
 
-const postData = (body) => {
+const postData = (body) =>
   fetch('https://25.javascript.pages.academy/keksobooking', {
     method: 'POST',
     credentials: 'same-origin',
@@ -31,6 +30,5 @@ const postData = (body) => {
     .catch(() => {
       createPopup(popupErrorElement);
     });
-};
 
 export { getData, postData };

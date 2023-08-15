@@ -1,4 +1,4 @@
-import { ALERT_DELAY, ESC_KEY } from './constants.js';
+import { ALERT_DELAY, ESC_KEY, FLOAT_PRECISION } from './constants.js';
 
 const getRandomIntNumber = (min, max) => {
   if (min === max) {
@@ -41,6 +41,9 @@ const fillElement = (element, data = [], callback = (item) => item) => {
   }
 };
 
+const getFixed = (value) => value.toFixed(FLOAT_PRECISION);
+const stringifyCoord = ({ lat, lng }) => [lat, lng].map(getFixed).join(' ');
+
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = 100;
@@ -64,4 +67,13 @@ const showAlert = (message) => {
 
 export const isEscapeKeyPressed = (evt) => evt.key === ESC_KEY;
 
-export { getRandomIntNumber, getRandomFloatNumber, getRandomArrayItem, getRandomArrayFragment, fillElement, showAlert };
+export {
+  getRandomIntNumber,
+  getRandomFloatNumber,
+  getRandomArrayItem,
+  getRandomArrayFragment,
+  fillElement,
+  showAlert,
+  getFixed,
+  stringifyCoord
+};

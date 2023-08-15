@@ -1,48 +1,56 @@
-import { generateCard } from './generate-card.js';
-import { ICON_HEIGHT, ICON_WIDTH, ICON_POINT, FLOAT_PRECISION, LAT_TOKYO, LNG_TOKYO } from './constants.js';
+// import { generateCard } from './generate-card.js';
+// import { ICON_HEIGHT, ICON_WIDTH, ICON_POINT, LAT_TOKYO, LNG_TOKYO } from './constants.js';
+// import { getFixed } from './helpers.js';
 
-const initMap = (offers, callback) => {
-  const addressElement = document.querySelector('#address');
-  const map = L.map('map-canvas').on('load', callback).setView(
-    {
-      lat: LAT_TOKYO,
-      lng: LNG_TOKYO
-    },
-    10
-  );
+// const DEFAULT_LOCATION = {
+//   lat: LAT_TOKYO,
+//   lng: LNG_TOKYO
+// };
 
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  }).addTo(map);
+// const initMap = (offers, callback) => {
+//   const addressElement = document.querySelector('#address');
+//   const map = L.map('map-canvas').on('load', callback).setView(DEFAULT_LOCATION, 10);
 
-  const mainPinIcon = L.icon({
-    iconUrl: './img/main-pin.svg',
-    iconSize: [ICON_WIDTH, ICON_HEIGHT],
-    iconAnchor: [ICON_POINT, ICON_HEIGHT]
-  });
+//   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+//     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+//   }).addTo(map);
 
-  const mainMarker = L.marker(
-    {
-      lat: LAT_TOKYO,
-      lng: LNG_TOKYO
-    },
-    {
-      draggable: true,
-      icon: mainPinIcon
-    }
-  );
-  mainMarker.addTo(map);
+//   const mainPinIcon = L.icon({
+//     iconUrl: './img/main-pin.svg',
+//     iconSize: [ICON_WIDTH, ICON_HEIGHT],
+//     iconAnchor: [ICON_POINT, ICON_HEIGHT]
+//   });
 
-  mainMarker.on('moveend', (evt) => {
-    const coord = evt.target.getLatLng();
-    addressElement.value = `${coord.lat.toFixed(FLOAT_PRECISION)} ${coord.lng.toFixed(FLOAT_PRECISION)}`;
-  });
+//   const mainMarker = L.marker(DEFAULT_LOCATION, {
+//     draggable: true,
+//     icon: mainPinIcon
+//   });
+//   mainMarker.addTo(map);
 
-  offers.forEach((offer) => {
-    const marker = L.marker(offer.location);
-    const balloon = generateCard(offer);
-    marker.addTo(map).bindPopup(balloon);
-  });
-};
+//   mainMarker.on('moveend', (evt) => {
+//     const coord = evt.target.getLatLng();
+//     addressElement.value = `${getFixed(coord.lat)} ${getFixed(coord.lng)}`;
+//   });
 
-export { initMap };
+//   const balloons = offers.map((offer) => {
+//     const marker = L.marker(offer.location);
+//     const balloon = generateCard(offer);
+//     return marker.addTo(map).bindPopup(balloon);
+//   });
+
+//   const resetMap = (resetCallback) => {
+//     map.setView(DEFAULT_LOCATION);
+
+//     mainMarker.setLatLng({
+//       DEFAULT_LOCATION
+//     });
+//     // console.log(balloons);
+//     balloons.forEach((element) => {
+//       element.remove();
+//     });
+//   };
+
+//   return resetMap;
+// };
+
+// export { initMap };
