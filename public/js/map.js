@@ -1,56 +1,51 @@
-// import { generateCard } from './generate-card.js';
-// import { ICON_HEIGHT, ICON_WIDTH, ICON_POINT, LAT_TOKYO, LNG_TOKYO } from './constants.js';
-// import { getFixed } from './helpers.js';
+import { generateCard } from './generate-card.js';
+import { ICON_HEIGHT, ICON_WIDTH, ICON_POINT, LAT_TOKYO, LNG_TOKYO } from './constants.js';
+import { getFixed } from './helpers.js';
 
-// const DEFAULT_LOCATION = {
-//   lat: LAT_TOKYO,
-//   lng: LNG_TOKYO
-// };
+const ZOOM = 10;
 
-// const initMap = (offers, callback) => {
-//   const addressElement = document.querySelector('#address');
-//   const map = L.map('map-canvas').on('load', callback).setView(DEFAULT_LOCATION, 10);
+const DEFAULT_LOCATION = {
+  lat: LAT_TOKYO,
+  lng: LNG_TOKYO
+};
 
-//   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-//     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-//   }).addTo(map);
+const initMap = (offers, callback) => {
+  const addressElement = document.querySelector('#address');
+  const map = L.map('map-canvas').on('load', callback).setView(DEFAULT_LOCATION, 10);
 
-//   const mainPinIcon = L.icon({
-//     iconUrl: './img/main-pin.svg',
-//     iconSize: [ICON_WIDTH, ICON_HEIGHT],
-//     iconAnchor: [ICON_POINT, ICON_HEIGHT]
-//   });
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
 
-//   const mainMarker = L.marker(DEFAULT_LOCATION, {
-//     draggable: true,
-//     icon: mainPinIcon
-//   });
-//   mainMarker.addTo(map);
+  const mainPinIcon = L.icon({
+    iconUrl: './img/main-pin.svg',
+    iconSize: [ICON_WIDTH, ICON_HEIGHT],
+    iconAnchor: [ICON_POINT, ICON_HEIGHT]
+  });
 
-//   mainMarker.on('moveend', (evt) => {
-//     const coord = evt.target.getLatLng();
-//     addressElement.value = `${getFixed(coord.lat)} ${getFixed(coord.lng)}`;
-//   });
+  const mainMarker = L.marker(DEFAULT_LOCATION, {
+    draggable: true,
+    icon: mainPinIcon
+  });
+  mainMarker.addTo(map);
 
-//   const balloons = offers.map((offer) => {
-//     const marker = L.marker(offer.location);
-//     const balloon = generateCard(offer);
-//     return marker.addTo(map).bindPopup(balloon);
-//   });
+  mainMarker.on('moveend', (evt) => {
+    const coord = evt.target.getLatLng();
+    addressElement.value = `${getFixed(coord.lat)} ${getFixed(coord.lng)}`;
+  });
 
-//   const resetMap = (resetCallback) => {
-//     map.setView(DEFAULT_LOCATION);
+  offers.map((offer) => {
+    const marker = L.marker(offer.location);
+    const balloon = generateCard(offer);
+    marker.addTo(map).bindPopup(balloon);
+  });
 
-//     mainMarker.setLatLng({
-//       DEFAULT_LOCATION
-//     });
-//     // console.log(balloons);
-//     balloons.forEach((element) => {
-//       element.remove();
-//     });
-//   };
+  const resetMap = () => {
+    mainMarker.setLatLng(DEFAULT_LOCATION);
+    map.closePopup().setView(DEFAULT_LOCATION, ZOOM);
+  };
 
-//   return resetMap;
-// };
+  return resetMap;
+};
 
-// export { initMap };
+export { initMap };

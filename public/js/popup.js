@@ -17,11 +17,11 @@ const createPopup = (element) => {
     }
   };
 
-  const closePopup = () => {
+  function closePopup() {
     popupElement.remove();
     document.removeEventListener('keydown', keyCloseHandler);
     activateForms();
-  };
+  }
 
   popupElement.addEventListener('click', () => closePopup());
   document.addEventListener('keydown', keyCloseHandler);
