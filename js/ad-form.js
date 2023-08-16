@@ -22,7 +22,7 @@ const formElements = {
 const slider = getSlider(formElements.sliderElement);
 const validator = initValidator(formElements);
 
-const initAdForm = () => {
+const initAdForm = (resetMap) => {
   formElements.roomNumberElement.addEventListener('change', () => {
     validator.validate(formElements.capacityElement);
   });
@@ -57,6 +57,12 @@ const initAdForm = () => {
       formElements.buttonElement.disabled = false;
       formElement.reset();
     });
+  });
+
+  formElements.formElement.addEventListener('reset', () => {
+    slider.set(parseInt(formElements.priceElement.min, 10));
+    validator.reset();
+    resetMap();
   });
 };
 

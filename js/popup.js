@@ -10,17 +10,18 @@ const createPopup = (element) => {
 
   deactivateForms();
 
-  const closePopup = () => {
-    popupElement.remove();
-    activateForms();
-  };
-
   const keyCloseHandler = (evt) => {
     if (isEscapeKeyPressed(evt)) {
-      evt.preventDefault();
+      // evt.preventDefault();
       closePopup();
     }
   };
+
+  function closePopup() {
+    popupElement.remove();
+    document.removeEventListener('keydown', keyCloseHandler);
+    activateForms();
+  }
 
   popupElement.addEventListener('click', () => closePopup());
   document.addEventListener('keydown', keyCloseHandler);

@@ -5,5 +5,6 @@ import { activateForms } from './toggle-page.js';
 
 initAdForm();
 getData().then((data) => {
-  initMap(data, activateForms);
+  const resetMap = initMap(data, activateForms);
+  initAdForm(resetMap);
 });
