@@ -1,14 +1,13 @@
 import { getData } from './api.js';
-import { createOfferData } from './create-offer-data.js';
 import { debounce } from './helpers.js';
 import { activateForms } from './toggle-page.js';
+import { renderPins } from './map.js';
 
 const RERENDER_DELAY = 500;
 const DEFAULT_VALUE = 'any';
 const filtersElement = document.querySelector('.map__filters');
 const filterControlGroups = Array.from(filtersElement.children);
 
-const dataFilterOffers = getData().then((data) => data.slice(0, 10));
 const housingPrice = {
   low: {
     from: 0,
@@ -45,7 +44,9 @@ const toggleFilters = () => {
   activateForms();
 };
 
-const rerender = () => createOfferData(filterOffers);
+const rerender = () => {
+  getData().then((data) => renderPins(filterOffers(data), activateForms));
+};
 
 const clearFilters = () => {
   filterControlGroups.forEach((group) => {
@@ -62,6 +63,4 @@ const clearFilters = () => {
 
 filtersElement.addEventListener('change', debounce(rerender, RERENDER_DELAY));
 
-export { toggleFilters, clearFilters, filterOffers };
-
-export { dataFilterOffers };
+export { toggleFilters, clearFilters, filterOffers, rerender };
