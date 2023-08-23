@@ -40,27 +40,27 @@ const filterRules = {
 const filterOffers = ({ offer }) =>
   filterControlGroups.every(({ value, id }) => value === DEFAULT_VALUE || filterRules[id](offer, value));
 
-const toggleFilters = () => {
-  activateForms();
-};
+// const toggleFilters = () => {
+//   activateForms();
+// };
 
 const rerender = () => {
   getData().then((data) => renderPins(filterOffers(data), activateForms));
 };
 
-const clearFilters = () => {
-  filterControlGroups.forEach((group) => {
-    if (group.name) {
-      group.value = DEFAULT_VALUE;
-    } else {
-      group.querySelectorAll('input').forEach((checkbox) => {
-        checkbox.checked = false;
-      });
-    }
-  });
-  rerender();
-};
+// const clearFilters = () => {
+//   filterControlGroups.forEach((group) => {
+//     if (group.name) {
+//       group.value = DEFAULT_VALUE;
+//     } else {
+//       group.querySelectorAll('input').forEach((checkbox) => {
+//         checkbox.checked = false;
+//       });
+//     }
+//   });
+//   rerender();
+// };
 
-filtersElement.addEventListener('change', debounce(rerender, RERENDER_DELAY));
+const initFilters = () => filtersElement.addEventListener('change', debounce(rerender, RERENDER_DELAY));
 
-export { toggleFilters, clearFilters, filterOffers, rerender };
+export { initFilters };
