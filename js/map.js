@@ -11,23 +11,25 @@ const DEFAULT_LOCATION = {
 };
 
 let map = null;
+let markerGroup = null;
 
 const renderPins = (offers, limit = DEFAULT_LIMIT) => {
   if (!map) {
     return;
   }
 
+  markerGroup.clearLayers();
   offers.slice(0, limit).forEach((offer) => {
     const marker = L.marker(offer.location);
     const balloon = generateCard(offer);
-    marker.addTo(map).bindPopup(balloon);
+    marker.addTo(markerGroup).bindPopup(balloon);
   });
 };
 
 const initMap = (offers, callback) => {
   const addressElement = document.querySelector('#address');
   map = L.map('map-canvas').on('load', callback).setView(DEFAULT_LOCATION, 10);
-
+  markerGroup = L.layerGroup().addTo(map);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);

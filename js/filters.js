@@ -39,23 +39,6 @@ const filterRules = {
 const filterOffer = ({ offer }) =>
   filterControlGroups.every(({ value, id }) => value === DEFAULT_VALUE || filterRules[id](offer, value));
 
-// const toggleFilters = () => {
-//   activateForms();
-// };
-
-
-// const clearFilters = () => {
-//   filterControlGroups.forEach((group) => {
-//     if (group.name) {
-//       group.value = DEFAULT_VALUE;
-//     } else {
-//       group.querySelectorAll('input').forEach((checkbox) => {
-//         checkbox.checked = false;
-//       });
-//     }
-//   });
-// };
-
 const rerender = () => {
   getData().then((data) => {
     renderPins(data.filter(filterOffer));
