@@ -1,6 +1,5 @@
 import { getData } from './api.js';
 import { debounce } from './helpers.js';
-import { activateForms } from './toggle-page.js';
 import { renderPins } from './map.js';
 
 const RERENDER_DELAY = 500;
@@ -37,16 +36,13 @@ const filterRules = {
   }
 };
 
-const filterOffers = ({ offer }) =>
+const filterOffer = ({ offer }) =>
   filterControlGroups.every(({ value, id }) => value === DEFAULT_VALUE || filterRules[id](offer, value));
 
 // const toggleFilters = () => {
 //   activateForms();
 // };
 
-const rerender = () => {
-  getData().then((data) => renderPins(filterOffers(data), activateForms));
-};
 
 // const clearFilters = () => {
 //   filterControlGroups.forEach((group) => {
@@ -58,8 +54,14 @@ const rerender = () => {
 //       });
 //     }
 //   });
-//   rerender();
 // };
+
+const rerender = () => {
+  getData().then((data) => {
+    renderPins(data.filter(filterOffer));
+  });
+};
+
 
 const initFilters = () => filtersElement.addEventListener('change', debounce(rerender, RERENDER_DELAY));
 
