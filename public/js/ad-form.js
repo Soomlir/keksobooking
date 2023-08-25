@@ -3,6 +3,7 @@ import { initValidator } from './validator.js';
 import { PRICE_DICTIONARY } from './constants.js';
 import { getSlider } from './slider.js';
 import { postData } from './api.js';
+import { clearFilters } from './filters.js';
 
 const formElement = forms[0].element;
 
@@ -63,6 +64,7 @@ const initAdForm = (resetMap) => {
     slider.set(parseInt(formElements.priceElement.min, 10));
     validator.reset();
     resetMap();
+    clearFilters();
   });
 };
 

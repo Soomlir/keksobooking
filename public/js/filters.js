@@ -45,7 +45,19 @@ const rerender = () => {
   });
 };
 
+const clearFilters = () => {
+  filterControlGroups.forEach((group) => {
+    if (group.name) {
+      group.value = DEFAULT_VALUE;
+    } else {
+      group.querySelectorAll('input').forEach((checkbox) => {
+        checkbox.checked = false;
+      });
+    }
+  });
+  rerender();
+};
 
 const initFilters = () => filtersElement.addEventListener('change', debounce(rerender, RERENDER_DELAY));
 
-export { initFilters };
+export { initFilters, clearFilters };
