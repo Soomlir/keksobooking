@@ -550,6 +550,10 @@ fieldset {
   flex-wrap: wrap;
 }
 
+.ad-form__photo {
+  object-fit: cover;
+}
+
 .ad-form__upload {
   display: -webkit-box;
   display: -ms-flexbox;
