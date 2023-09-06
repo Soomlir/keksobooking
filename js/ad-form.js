@@ -22,12 +22,12 @@ const formElements = {
   buttonElement: formElement.querySelector('.ad-form__submit'),
   avatarElement: formElement.querySelector('.ad-form-header__input'),
   avatarPreviewElement: formElement.querySelector('.ad-form-header__preview img'),
-  housingElement: formElement.querySelector('.ad-form__input'),
+  housingPhotoElement: formElement.querySelector('#images'),
   housingPreviewElement: formElement.querySelector('.ad-form__photo')
 };
 
 const resetAvatarPreview = initImagePreview(formElements.avatarElement, formElements.avatarPreviewElement);
-const resetOfferImagePreview = initImagePreview(formElements.housingElement, formElements.housingPreviewElement);
+const resetOfferImagePreview = initImagePreview(formElements.housingPhotoElement, formElements.housingPreviewElement);
 
 const slider = getSlider(formElements.sliderElement);
 const validator = initValidator(formElements);
