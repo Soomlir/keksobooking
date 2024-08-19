@@ -1,6 +1,5 @@
 # keksobooking
 
-Учебный проект по программе html academy.
-
+Учебный проект - написание js логики.
 Опубликованная версия:
 [keksobooking](https://soomlir.github.io/keksobooking/)
