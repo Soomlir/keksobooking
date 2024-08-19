@@ -2,4 +2,5 @@
 
 Учебный проект по программе html academy.
 
-[Опубликованная версия](https://soomlir.github.io/keksobooking/ "Посмотреть проект")
+Опубликованная версия:
+[keksobooking](https://soomlir.github.io/keksobooking/)
